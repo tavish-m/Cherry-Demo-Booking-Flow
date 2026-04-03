@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Your Visit | Cherry Aesthetics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="form-container">
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Back Button -->
+    <button class="back-btn" id="backBtn" aria-label="Go back">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+    </button>
+
+    <!-- Steps Container -->
+    <div class="steps-wrapper" id="stepsWrapper">
+
+      <!-- ============================================ -->
+      <!-- STEP 1: How to get started (path selector)   -->
+      <!-- ============================================ -->
+      <div class="step active" data-step="path-select">
+        <div class="step-content">
+          <div class="logo"><img src="logo.png" alt="Cherry Aesthetics" class="logo-img"></div>
+          <h1>How would you like to get started?</h1>
+          <div class="path-cards">
+            <button class="path-card" data-path="in-person">
+              <div class="path-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div class="path-card-text">
+                <span class="path-card-title">Visit in person</span>
+              </div>
+            </button>
+            <button class="path-card" data-path="talk-first">
+              <div class="path-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div class="path-card-text">
+                <span class="path-card-title">Talk to our team first</span>
+              </div>
+            </button>
+            <button class="path-card" data-path="exploring">
+              <div class="path-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <div class="path-card-text">
+                <span class="path-card-title">Just exploring for now</span>
+              </div>
+            </button>
+          </div>
+          <p class="microcopy-bottom">For the most natural results, many patients benefit from a personalized, multi-treatment approach. We'll guide you.</p>
+        </div>
+      </div>
+
+      <!-- ============================================ -->
+      <!-- PATH A: VISIT IN PERSON                      -->
+      <!-- ============================================ -->
+
+      <!-- A2: Preferred Location -->
+      <div class="step" data-step="ip-location">
+        <div class="step-content">
+          <div class="step-header">
+            <h2>What is your preferred location?</h2>
+          </div>
+          <div class="location-cards">
+            <button class="location-card" data-location="Cherry Aesthetics - Main">
+              <div class="location-name">Main Location</div>
+              <div class="location-address">123 Main Street, Suite 100, Your City, ST 00000</div>
+            </button>
+            <button class="location-card" data-location="Cherry Aesthetics - Downtown">
+              <div class="location-name">Downtown</div>
+              <div class="location-address">456 Downtown Ave, Suite 200, Your City, ST 00000</div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- A3: Date & Time -->
+      <div class="step" data-step="ip-datetime">
+        <div class="step-content">
+          <div class="step-header">
+            <h2>When would you like to come in?</h2>
+          </div>
+          <div class="datetime-picker">
+            <div class="calendar" id="calendar">
+              <div class="calendar-header">
+                <button class="cal-nav" id="calPrev" aria-label="Previous month">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <span class="cal-month" id="calMonth"></span>
+                <button class="cal-nav" id="calNext" aria-label="Next month">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+              </div>
+              <div class="calendar-weekdays">
+                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+              </div>
+              <div class="calendar-days" id="calDays"></div>
+            </div>
+            <div class="time-slots" id="timeSlots">
+              <h3>Select a time</h3>
+              <div class="time-grid" id="timeGrid"></div>
+            </div>
+            <span class="field-error" id="dateTimeError"></span>
+          </div>
+          <button class="btn btn-primary" id="ipDateTimeNext">Continue</button>
+        </div>
+      </div>
+
+      <!-- A4: Phone -->
+      <div class="step" data-step="ip-phone">
+        <div class="step-content">
+          <div class="step-header">
+            <h2>What is your phone number?</h2>
+          </div>
+          <div class="input-group">
+            <div class="field">
+              <input type="tel" id="ipPhone" placeholder="(555) 123-4567" name="tel" autocomplete="tel" required>
+              <span class="field-error" id="ipPhoneError"></span>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="ipPhoneNext">Continue</button>
+          <p class="consent-text">By continuing, you consent to receive appointment reminders and service notifications from Cherry Aesthetics. Message &amp; data rates may apply. Reply STOP to opt out.</p>
+          <p class="consent-text">By entering my phone number, I consent to Cherry and its affiliates contacting me via call, text, automated dialing technology, and/or prerecorded messages for marketing purposes. My consent is not required to obtain any product/service, and I can revoke it at any time by contacting support@withcherry.com or any other reasonable means. Message frequency varies. Message and data rates may apply. Text HELP for help or STOP to cancel.</p>
+          <div class="cherry-info-box">
+            <img src="cherry-logo.png" alt="Cherry" class="cherry-info-logo">
+            <p class="cherry-info-text">Cherry offers flexible financing for services at your provider's office. Pay over time with convenient monthly payments.</p>
+          </div>
+          <p class="privacy-link"><a href="https://withcherry.com/privacy" target="_blank">Cherry Privacy</a> &middot; <a href="https://withcherry.com/terms" target="_blank">Cherry Terms</a></p>
+        </div>
+      </div>
+
+      <!-- A5: Full Name -->
+      <div class="step" data-step="ip-name">
+        <div class="step-content">
+          <div class="step-header">
+            <h2>What is your full name?</h2>
+          </div>
+          <div class="input-group">
+            <div class="field">
+              <input type="text" id="ipFirstName" placeholder="First name" name="given-name" autocomplete="given-name" required>
+              <span class="field-error" id="ipFirstNameError"></span>
+            </div>
+            <div class="field">
+              <input type="text" id="ipLastName" placeholder="Last name" name="family-name" autocomplete="family-name" required>
+              <span class="field-error" id="ipLastNameError"></span>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="ipNameNext">Continue</button>
+          <p class="privacy-link"><a href="https://withcherry.com/privacy" target="_blank">Cherry Privacy</a> &middot; <a href="https://withcherry.com/terms" target="_blank">Cherry Terms</a></p>
+        </div>
+      </div>
+
+      <!-- A6: Email -->
+      <div class="step" data-step="ip-email">
+        <div class="step-content">
+          <div class="step-header">
+            <h2>What is your email?</h2>
+          </div>
+          <div class="input-group">
+            <div class="field">
+              <input type="email" id="ipEmail" placeholder="jane@example.com" name="email" autocomplete="email" required>
+              <span class="field-error" id="ipEmailError"></span>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="ipEmailNext">Continue</button>
+          <p class="consent-text">By providing your email, you consent to receive marketing and non-marketing emails from Cherry Aesthetics and Cherry Technologies Inc., including appointment reminders, confirmations, promotional offers, and service notifications. You may unsubscribe at any time.</p>
+          <p class="privacy-link"><a href="https://withcherry.com/privacy" target="_blank">Cherry Privacy</a> &middot; <a href="https://withcherry.com/terms" target="_blank">Cherry Terms</a></p>
+        </div>
+      </div>
+
+      <!-- A7: Confirm Appointment (DOB + confirm) -->
+      <div class="step" data-step="ip-confirm">
+        <div class="step-content">
+          <div class="step-header">
+            <h2>Confirm your appointment</h2>
+          </div>
+          <div class="summary" id="ipSummary"></div>
+          <div class="input-group" style="margin-top: 16px;">
+            <label class="field-label">Date of Birth <span class="required-note">(required for treatment eligibility)</span></label>
+            <div class="dob-row">
+              <select id="ipDobMonth" class="dob-select">
+                <option value="" disabled selected>Month</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+              <select id="ipDobDay" class="dob-select dob-select-sm">
+                <option value="" disabled selected>Day</option>
+              </select>
+              <select id="ipDobYear" class="dob-select dob-select-sm">
+                <option value="" disabled selected>Year</option>
+              </select>
+            </div>
+            <span class="field-error" id="ipDobError"></span>
+          </div>
+          <button class="btn btn-primary" id="ipConfirmBtn">Confirm Appointment</button>
+          <p class="microcopy-bottom safety-note">Patient safety &amp; care is our number one priority. We do not treat patients under 18 years old. We will customize your treatment for your phase of life &amp; goals.</p>
+          <p class="privacy-link"><a href="https://withcherry.com/privacy" target="_blank">Cherry Privacy</a> &middot; <a href="https://withcherry.com/terms" target="_blank">Cherry Terms</a></p>
+        </div>
+      </div>
+
+      <!-- A-done: In-Person Confirmation -->
+      <div class="step" data-step="ip-done">
+        <div class="step-content confirmation-step">
+          <div class="checkmark-circle">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00C37D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" class="checkmark-path"/>
+            </svg>
+          </div>
+          <h2>You're All Set!</h2>
+          <p class="confirm-message">We look forward to seeing you. You'll receive a confirmation email with all the details shortly.</p>
+          <div class="summary" id="ipFinalSummary"></div>
+          <div class="cherry-prompt" style="margin-top: 24px;">
+            <div class="cherry-logo"><img src="cherry-logo.png" alt="Cherry" class="cherry-logo-img"></div>
+            <p class="cherry-title">Want to see if you're pre-qualified for Cherry Financing?</p>
+            <p class="cherry-desc">No hard credit check to see your eligibility.</p>
+            <div class="cherry-buttons">
+              <button class="cherry-btn" id="cherryYes" data-cherry="yes">Yes</button>
+              <button class="cherry-btn" id="cherryNo" data-cherry="no">No</button>
+            </div>
+            <p class="consent-text" style="text-align: center;">All loans through Cherry are made by Lead Bank, Member FDIC. All retail installment sales contracts through Cherry are extended by unaffiliated merchant partners. Cherry may purchase interests in and/or service Lead Bank's loans or purchase and/or service the retail installment sales contracts made by its unaffiliated merchant partners.</p>
+          </div>
+          <p class="privacy-link"><a href="https://withcherry.com/privacy" target="_blank">Cherry Privacy</a> &middot; <a href="https://withcherry.com/terms" target="_blank">Cherry Terms</a></p>
+        </div>
+      </div>
+
+      <!-- A-cherry: Cherry Financing Pre-Approval -->
+      <div class="step" data-step="ip-cherry">
+        <div class="step-content cherry-step">
+          <div class="cherry-logo"><img src="cherry-logo.png" alt="Cherry" class="cherry-logo-img"></div>
+          <div class="step-header">
+            <h2>Pay over time with Cherry</h2>
+          </div>
+          <div class="cherry-benefits">
+            <div class="cherry-benefit">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C37D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>0% APR plans available</span>
+            </div>
+            <div class="cherry-benefit">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C37D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>No impact to credit to check availability</span>
+            </div>
+            <div class="cherry-benefit">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C37D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><a href="https://withcherry.com/consumers" target="_blank" class="cherry-faq-link">Want to learn more?</a></span>
+            </div>
+          </div>
+          <p class="cherry-tagline">Split big costs into smaller monthly payments with Cherry. Let your money go further when you pay in installments with Cherry Payment Plans.</p>
+          <div class="input-group">
+            <label class="field-label">Full name</label>
+            <div class="field editable-field">
+              <input type="text" id="cherryName" readonly>
+              <button class="edit-btn" id="cherryNameEdit" aria-label="Edit name">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+              </button>
+            </div>
+            <label class="field-label">Phone number</label>
+            <div class="field editable-field">
+              <input type="tel" id="cherryPhone" readonly>
+              <button class="edit-btn" id="cherryPhoneEdit" aria-label="Edit phone">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+              </button>
+            </div>
+            <label class="field-label">Current address</label>
+            <div class="field">
+              <input type="text" id="cherryStreet" name="street-address" placeholder="Street address" autocomplete="street-address">
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <input type="text" id="cherryCity" name="address-level2" placeholder="City" autocomplete="address-level2">
+              </div>
+              <div class="field field-sm">
+                <input type="text" id="cherryState" name="address-level1" placeholder="State" autocomplete="address-level1" maxlength="2">
+              </div>
+              <div class="field field-sm">
+                <input type="text" id="cherryZip" name="postal-code" placeholder="ZIP" autocomplete="postal-code" maxlength="5">
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-cherry" id="cherryCheckBtn">Check Eligibility</button>
+          <div class="cherry-result" id="cherryResult" style="display: none;">
+            <div class="cherry-result-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00C37D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="16 8 10 16 7 13"/></svg>
+            </div>
+            <div class="cherry-result-text">
+              <span class="cherry-result-title">Congrats, you're pre-approved!</span>
+              <span class="cherry-result-amount">Up to <strong>$5,000</strong> with Cherry financing</span>
+            </div>
+          </div>
+          <p class="cherry-footer cherry-footer-sm">Prequalification is based on the information you provide and a soft credit inquiry. Receiving a prequalified amount does not guarantee that you will be extended an offer of credit. You are not yet approved for financing for a specific amount or rate. Actual rates may be different from the rates advertised and/or shown and will be based on eligibility criteria, which include factors such as a soft credit pull score, loan amount, loan term, and credit usage and history. Lowest rate advertised is not available for all loan sizes, types, or purposes, and assumes a very well-qualified borrower with an excellent credit profile. Visit <a href="https://withcherry.com" target="_blank">withcherry.com</a> to learn more.</p>
+          <p class="privacy-link"><a href="https://withcherry.com/privacy" target="_blank">Cherry Privacy</a> &middot; <a href="https://withcherry.com/terms" target="_blank">Cherry Terms</a></p>
+        </div>
+      </div>
+
+      <!-- ============================================ -->
+      <!-- PATH B: TALK TO OUR TEAM FIRST               -->
+      <!-- ============================================ -->
+
+      <!-- B2: Preferred Location -->
+      <div class="step" data-step="talk-location">
+        <div class="step-content">
+          <div class="step-header">
+            <h2>What is your preferred location?</h2>
+          </div>
+          <div class="location-cards">
+            <button class="location-card" data-location="Cherry Aesthetics - Main">
+              <div class="location-name">Main Location</div>
+              <div class="location-address">123 Main Street, Suite 100, Your City, ST 00000</div>
+            </button>
+            <button class="location-card" data-location="Cherry Aesthetics - Downtown">
+              <div class="location-name">Downtown</div>
+              <div class="location-address">456 Downtown Ave, Suite 200, Your City, ST 00000</div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- B3: Full Name -->
+      <div class="step" data-step="talk-name">
+        <div class="step-content">
+          <div class="step-header">
+            <h2>What is your full name?</h2>
+          </div>
+          <div class="input-group">
+            <div class="field">
+              <input type="text" id="talkFirstName" placeholder="First name" name="given-name" autocomplete="given-name" required>
+              <span class="field-error" id="talkFirstNameError"></span>
+            </div>
+            <div class="field">
+              <input type="text" id="talkLastName" placeholder="Last name" name="family-name" autocomplete="family-name" required>
+              <span class="field-error" id="talkLastNameError"></span>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="talkNameNext">Continue</button>
+          <p class="privacy-link"><a href="https://withcherry.com/privacy" target="_blank">Cherry Privacy</a> &middot; <a href="https://withcherry.com/terms" target="_blank">Cherry Terms</a></p>
+        </div>
+      </div>
+
+      <!-- B4: Phone -->
+      <div class="step" data-step="talk-phone">
+        <div class="step-content">
+          <div class="step-header">
+            <h2>What is your phone number?</h2>
+          </div>
+          <div class="input-group">
+            <div class="field">
+              <input type="tel" id="talkPhone" placeholder="(555) 123-4567" name="tel" autocomplete="tel" required>
+              <span class="field-error" id="talkPhoneError"></span>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="talkPhoneNext">Continue</button>
+          <p class="consent-text">By continuing, you consent to receive calls and texts from Cherry Aesthetics. Reply STOP to opt out.</p>
+          <p class="consent-text">By entering my phone number, I consent to Cherry and its affiliates contacting me via call, text, automated dialing technology, and/or prerecorded messages for marketing purposes. My consent is not required to obtain any product/service, and I can revoke it at any time by contacting support@withcherry.com or any other reasonable means. Message frequency varies. Message and data rates may apply. Text HELP for help or STOP to cancel.</p>
+          <p class="privacy-link"><a href="https://withcherry.com/privacy" target="_blank">Cherry Privacy</a> &middot; <a href="https://withcherry.com/terms" target="_blank">Cherry Terms</a></p>
+        </div>
+      </div>
+
+      <!-- B5: Preferred Date/Time + optional note -->
+      <div class="step" data-step="talk-datetime">
+        <div class="step-content">
+          <div class="step-header">
+            <h2>When works best for a call?</h2>
+          </div>
+          <div class="datetime-picker">
+            <div class="calendar" id="talkCalendar">
+              <div class="calendar-header">
+                <button class="cal-nav" id="talkCalPrev" aria-label="Previous month">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <span class="cal-month" id="talkCalMonth"></span>
+                <button class="cal-nav" id="talkCalNext" aria-label="Next month">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+              </div>
+              <div class="calendar-weekdays">
+                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+              </div>
+              <div class="calendar-days" id="talkCalDays"></div>
+            </div>
+            <div class="time-slots" id="talkTimeSlots">
+              <h3>Select a time</h3>
+              <div class="time-grid" id="talkTimeGrid"></div>
+            </div>
+            <span class="field-error" id="talkDateTimeError"></span>
+          </div>
+          <div class="input-group" style="margin-top: 16px;">
+            <label class="field-label">Anything you'd like us to prepare for your call? <span class="optional-note">(optional)</span></label>
+            <div class="field">
+              <textarea id="talkNote" placeholder="E.g., pricing questions, specific concerns..." rows="3"></textarea>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="talkDateTimeNext">Continue</button>
+        </div>
+      </div>
+
+      <!-- B-done: Talk Confirmation -->
+      <div class="step" data-step="talk-done">
+        <div class="step-content confirmation-step">
+          <div class="checkmark-circle">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00C37D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" class="checkmark-path"/>
+            </svg>
+          </div>
+          <h2>We'll be in touch soon!</h2>
+          <p class="confirm-message">A member of our team will reach out at your preferred time. In the meantime, explore some resources:</p>
+          <div class="resource-links">
+            <a href="#" class="resource-link">See Real Results</a>
+            <a href="#" class="resource-link">Frequently Asked Questions</a>
+            <a href="#" class="resource-link">Read Patient Reviews</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================ -->
+      <!-- PATH C: JUST EXPLORING                       -->
+      <!-- ============================================ -->
+
+      <!-- C2: Full Name -->
+      <div class="step" data-step="explore-name">
+        <div class="step-content">
+          <div class="step-header">
+            <h2>What is your full name?</h2>
+          </div>
+          <div class="input-group">
+            <div class="field">
+              <input type="text" id="exploreFirstName" placeholder="First name" name="given-name" autocomplete="given-name" required>
+              <span class="field-error" id="exploreFirstNameError"></span>
+            </div>
+            <div class="field">
+              <input type="text" id="exploreLastName" placeholder="Last name" name="family-name" autocomplete="family-name" required>
+              <span class="field-error" id="exploreLastNameError"></span>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="exploreNameNext">Continue</button>
+          <p class="privacy-link"><a href="https://withcherry.com/privacy" target="_blank">Cherry Privacy</a> &middot; <a href="https://withcherry.com/terms" target="_blank">Cherry Terms</a></p>
+        </div>
+      </div>
+
+      <!-- C3: Email -->
+      <div class="step" data-step="explore-email">
+        <div class="step-content">
+          <div class="step-header">
+            <h2>What is your email?</h2>
+          </div>
+          <div class="input-group">
+            <div class="field">
+              <input type="email" id="exploreEmail" placeholder="jane@example.com" name="email" autocomplete="email" required>
+              <span class="field-error" id="exploreEmailError"></span>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="exploreEmailNext">Continue</button>
+          <p class="privacy-link"><a href="https://withcherry.com/privacy" target="_blank">Cherry Privacy</a> &middot; <a href="https://withcherry.com/terms" target="_blank">Cherry Terms</a></p>
+        </div>
+      </div>
+
+      <!-- C-done: Explore Confirmation -->
+      <div class="step" data-step="explore-done">
+        <div class="step-content confirmation-step">
+          <div class="checkmark-circle">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00C37D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" class="checkmark-path"/>
+            </svg>
+          </div>
+          <h2>Welcome to Cherry Aesthetics!</h2>
+          <p class="confirm-message">We've added you to our monthly newsletter with expert tips, patient stories, and exclusive offers. Here are some resources to get started:</p>
+          <div class="resource-links">
+            <a href="#" class="resource-link">See Real Results</a>
+            <a href="#" class="resource-link">Frequently Asked Questions</a>
+            <a href="#" class="resource-link">Read Patient Reviews</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

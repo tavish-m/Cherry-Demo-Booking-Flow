@@ -224,7 +224,7 @@ h1 {
 }
 
 .btn-primary {
-  background: var(--orange);
+  background: var(--teal);
   color: var(--white);
   padding: 14px 48px;
   width: 100%;
@@ -233,9 +233,9 @@ h1 {
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: var(--orange-hover);
+  background: #00a86b;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(236, 51, 96, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 195, 125, 0.3);
 }
 
 .btn-primary:active {

@@ -794,45 +794,6 @@
       });
   });
 
-  // DOB dropdowns
-  (function initDobDropdowns() {
-    var daySelect = $('#ipDobDay');
-    var yearSelect = $('#ipDobYear');
-    var monthSelect = $('#ipDobMonth');
-
-    for (var d = 1; d <= 31; d++) {
-      var opt = document.createElement('option');
-      opt.value = d;
-      opt.textContent = d;
-      daySelect.appendChild(opt);
-    }
-
-    var currentYear = new Date().getFullYear();
-    for (var y = currentYear; y >= 1920; y--) {
-      var opt = document.createElement('option');
-      opt.value = y;
-      opt.textContent = y;
-      yearSelect.appendChild(opt);
-    }
-
-    function updateDays() {
-      var month = parseInt(monthSelect.value);
-      var year = parseInt(yearSelect.value) || currentYear;
-      if (!month) return;
-      var maxDay = new Date(year, month, 0).getDate();
-      var currentDay = parseInt(daySelect.value);
-      var options = daySelect.querySelectorAll('option');
-      options.forEach(function (opt) {
-        if (opt.value === '') return;
-        opt.style.display = parseInt(opt.value) > maxDay ? 'none' : '';
-      });
-      if (currentDay > maxDay) daySelect.value = maxDay;
-    }
-
-    monthSelect.addEventListener('change', updateDays);
-    yearSelect.addEventListener('change', updateDays);
-  })();
-
   // Summary builder
   function buildIpSummary() {
     var html = '';
@@ -855,32 +816,6 @@
 
   // Confirm appointment
   $('#ipConfirmBtn').addEventListener('click', function () {
-    var dobError = $('#ipDobError');
-    dobError.textContent = '';
-
-    var month = $('#ipDobMonth').value;
-    var day = $('#ipDobDay').value;
-    var year = $('#ipDobYear').value;
-
-    if (!month || !day || !year) {
-      dobError.textContent = 'Date of birth is required';
-      return;
-    }
-
-    var birthDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-    var today = new Date();
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    if (age < 18) {
-      dobError.textContent = 'You must be at least 18 years old';
-      return;
-    }
-
-    state.data.dob = month + '/' + day + '/' + year;
-
     var html = '';
     html += summaryRow('Location', state.data.location);
     html += summaryRow('Date', formatDisplayDate(state.data.preferredDate));

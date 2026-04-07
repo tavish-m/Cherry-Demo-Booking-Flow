@@ -173,6 +173,7 @@
 
   function formatPhone(e) {
     var val = e.target.value.replace(/\D/g, '');
+    if (val.length > 10 && val.charAt(0) === '1') val = val.slice(1);
     if (val.length > 10) val = val.slice(0, 10);
     if (val.length >= 7) {
       e.target.value = '(' + val.slice(0, 3) + ') ' + val.slice(3, 6) + '-' + val.slice(6);

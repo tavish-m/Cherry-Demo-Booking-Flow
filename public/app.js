@@ -1,6 +1,212 @@
 (function () {
   'use strict';
 
+  // ===== Pre-Qualification PDF Generator =====
+  function generatePrequalPDF(data) {
+    var jsPDF = window.jspdf.jsPDF;
+    var doc = new jsPDF();
+    var pageWidth = doc.internal.pageSize.getWidth();
+    var margin = 25;
+    var usable = pageWidth - margin * 2;
+    var y = 15;
+
+    var cherry = {
+      primary:   [0, 195, 125],
+      secondary: [14, 32, 47],
+      tertiary:  [236, 51, 96],
+      light:     [240, 253, 248],
+      gray:      [120, 130, 140],
+      lightGray: [180, 190, 200],
+    };
+
+    var cherryLogoImg = new Image();
+    cherryLogoImg.src = 'cherry-logo.png';
+    cherryLogoImg.onload = function () {
+      var logoW = 60;
+      var logoH = logoW * (cherryLogoImg.naturalHeight / cherryLogoImg.naturalWidth);
+      doc.addImage(cherryLogoImg, 'PNG', (pageWidth - logoW) / 2, y, logoW, logoH);
+      y += logoH + 4;
+      renderRestOfPDF();
+    };
+
+    function renderRestOfPDF() {
+    doc.setDrawColor.apply(doc, cherry.primary);
+    doc.setLineWidth(0.8);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 10;
+
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor.apply(doc, cherry.secondary);
+    doc.text('Pre-Qualification Letter', pageWidth / 2, y, { align: 'center' });
+    y += 10;
+
+    var issueDate = new Date();
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() + 60);
+    var fmtDate = function (d) {
+      var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    };
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor.apply(doc, cherry.gray);
+    doc.text('Date Issued: ' + fmtDate(issueDate), margin, y);
+    y += 6;
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor.apply(doc, cherry.tertiary);
+    doc.text('Expires: ' + fmtDate(expireDate), margin, y);
+    y += 10;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor.apply(doc, cherry.gray);
+    doc.text('Prepared for:', margin, y);
+    y += 7;
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor.apply(doc, cherry.secondary);
+    doc.setFontSize(13);
+    doc.text(data.firstName + ' ' + data.lastName, margin, y);
+    y += 7;
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor.apply(doc, cherry.gray);
+    if (data.address && data.address.streetAddress) {
+      doc.text(data.address.streetAddress, margin, y);
+      y += 5;
+      doc.text(data.address.city + ', ' + data.address.state + ' ' + data.address.zip, margin, y);
+      y += 5;
+    }
+    y += 10;
+
+    var boxY = y;
+    var boxH = 46;
+    doc.setFillColor.apply(doc, cherry.light);
+    doc.setDrawColor.apply(doc, cherry.primary);
+    doc.setLineWidth(1.2);
+    doc.roundedRect(margin, boxY, usable, boxH, 6, 6, 'FD');
+
+    var minAmt = '$' + Number(data.minimumAmount).toLocaleString();
+    var maxAmt = '$' + Number(data.maximumAmount).toLocaleString();
+
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor.apply(doc, cherry.secondary);
+    var titleLine1 = 'Great News! You may qualify for a payment plan';
+    doc.text(titleLine1, pageWidth / 2, boxY + 12, { align: 'center' });
+
+    var amountLineY = boxY + 19;
+    var beforeMin = 'between ';
+    var andText = ' and ';
+    var afterMax = ' to be used at Cherry Aesthetics.';
+    var amountText = beforeMin + minAmt + andText + maxAmt + afterMax;
+
+    var fullW = doc.getTextWidth(amountText);
+    var startX = (pageWidth - fullW) / 2;
+
+    doc.setTextColor.apply(doc, cherry.secondary);
+    doc.text(beforeMin, startX, amountLineY);
+    var x = startX + doc.getTextWidth(beforeMin);
+
+    doc.setFontSize(14);
+    doc.setTextColor.apply(doc, cherry.primary);
+    doc.text(minAmt, x, amountLineY);
+    x += doc.getTextWidth(minAmt);
+
+    doc.setFontSize(12);
+    doc.setTextColor.apply(doc, cherry.secondary);
+    doc.text(andText, x, amountLineY);
+    x += doc.getTextWidth(andText);
+
+    doc.setFontSize(14);
+    doc.setTextColor.apply(doc, cherry.primary);
+    doc.text(maxAmt, x, amountLineY);
+    x += doc.getTextWidth(maxAmt);
+
+    doc.setFontSize(12);
+    doc.setTextColor.apply(doc, cherry.secondary);
+    doc.text(afterMax, x, amountLineY);
+
+    var titleLines = [titleLine1, amountText];
+
+    var subtitleY = boxY + 12 + titleLines.length * 6 + 4;
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor.apply(doc, cherry.gray);
+    var subLines = doc.splitTextToSize('You will need to complete a payment plan application to find out the amount that you are approved for in this range.', usable - 20);
+    doc.text(subLines, pageWidth / 2, subtitleY, { align: 'center' });
+    y = boxY + boxH + 10;
+
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor.apply(doc, cherry.secondary);
+    doc.text('Terms', margin, y);
+    y += 7;
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor.apply(doc, cherry.gray);
+    var terms = [
+      'Financing options through Cherry have an annual percentage rate ("APR") of 0% to 35.99%, terms between 1 and 60 months, and an amount of $200 - $50,000. For example, a $1,500 purchase may cost $60/month over 24 months at 0% APR, with $60 due at the time of purchase. Eligibility for financing depends on a number of factors, including (but not limited to) your financial history, credit score, monthly income, and monthly expenses. Eligibility for financing not guaranteed.',
+      'No hard credit pull was performed for this pre-qualification.',
+      'Final terms (rate, approved amount, and plan length) will be determined upon completion of a full application.',
+      'This pre-qualification is valid for 60 days from the date of issue.',
+    ];
+    terms.forEach(function (t) {
+      var lines = doc.splitTextToSize('\u2022  ' + t, usable);
+      doc.text(lines, margin, y);
+      y += lines.length * 5 + 2;
+    });
+    y += 4;
+
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor.apply(doc, cherry.secondary);
+    doc.text('Next Steps', margin, y);
+    y += 7;
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor.apply(doc, cherry.gray);
+    var steps = [
+      'Complete a full application at pay.withcherry.com or ask Cherry Aesthetics to send you an application link.',
+      'Provide any additional information requested during the application process.',
+      'If approved, select a payment plan that works for you.',
+    ];
+    steps.forEach(function (s, i) {
+      var lines = doc.splitTextToSize((i + 1) + '.  ' + s, usable);
+      doc.text(lines, margin, y);
+      y += lines.length * 5 + 2;
+    });
+    y += 4;
+
+    doc.setDrawColor.apply(doc, cherry.primary);
+    doc.setLineWidth(0.4);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 8;
+
+    doc.setFontSize(7.5);
+    doc.setTextColor.apply(doc, cherry.lightGray);
+    var disclosures = [
+      'Pre-qualification is based on the information you provided and a soft credit inquiry. Receiving a pre-qualified amount does not guarantee that you will be extended an offer of credit. You are not yet approved for financing for a specific amount or rate. Actual rates may differ from the rates shown and will be based on eligibility criteria including credit score, loan amount, loan term, and credit history. Lowest rate advertised is not available for all loan sizes, types, or purposes.',
+      'Cherry is a financial technology provider and platform, not a bank or a lender. Please see withcherry.com/financing-partners for more information.',
+      'For information regarding Cherry\'s licenses see licensing page; NMLS Consumer Access: nmlsconsumeraccess.org.',
+    ];
+    disclosures.forEach(function (d) {
+      var lines = doc.splitTextToSize(d, usable);
+      doc.text(lines, margin, y);
+      y += lines.length * 3.5 + 3;
+    });
+    y += 5;
+
+    doc.setFontSize(8);
+    doc.setTextColor.apply(doc, cherry.secondary);
+    doc.text('Cherry  |  withcherry.com', pageWidth / 2, y, { align: 'center' });
+
+    doc.save('Cherry_PreQualification_' + data.firstName + '_' + data.lastName + '.pdf');
+    } // end renderRestOfPDF
+  }
+
   // ===== Flow Definitions =====
   var PATHS = {
     'in-person': ['path-select', 'ip-location', 'ip-datetime', 'ip-phone', 'ip-name', 'ip-email', 'ip-confirm', 'ip-done', 'ip-cherry'],
@@ -542,8 +748,25 @@
           iconEl.setAttribute('stroke', '#00C37D');
           var minAmt = '$' + Number(data.minimumAmount).toLocaleString();
           var maxAmt = '$' + Number(data.maximumAmount).toLocaleString();
-          titleEl.textContent = 'Great News! You pre-qualified with Cherry. Amount Range: ' + minAmt + ' to ' + maxAmt + '.';
-          amountEl.innerHTML = 'APR can vary between 0% APR and up to 35.99%. Click <a href="https://pay.withcherry.com/" class="cherry-start-link" target="_blank">"Start Now"</a> to complete an actual application or ask Cherry Aesthetics to send you an application link.';
+          titleEl.textContent = 'Great News! You may qualify for a payment plan amount between ' + minAmt + ' and ' + maxAmt + '.';
+          amountEl.innerHTML = '<span class="cherry-result-subtitle">You will need to complete a payment plan application to find out the amount that you are approved for in this range. <a href="#" class="cherry-download-link">Download Pre-Qualification Letter</a></span>';
+          amountEl.querySelector('.cherry-download-link').addEventListener('click', function (e) {
+            e.preventDefault();
+            generatePrequalPDF({
+              firstName: state.data.firstName,
+              lastName: state.data.lastName,
+              address: state.data.cherryAddress,
+              minimumAmount: data.minimumAmount,
+              maximumAmount: data.maximumAmount,
+            });
+          });
+          var startBtn = resultEl.parentNode.querySelector('.cherry-start-btn-wrap');
+          if (!startBtn) {
+            var wrap = document.createElement('div');
+            wrap.className = 'cherry-start-btn-wrap';
+            wrap.innerHTML = '<a href="https://pay.withcherry.com/" class="btn btn-cherry cherry-start-btn" target="_blank">Start Now</a><span class="cherry-apr-disclosure">APR can vary between 0% APR and up to 35.99%.</span>';
+            resultEl.parentNode.insertBefore(wrap, resultEl.nextSibling);
+          }
           resultEl.style.borderColor = '#00C37D';
           resultEl.style.background = '#e6f9f0';
         } else {
@@ -551,7 +774,14 @@
           iconEl.innerHTML = '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>';
           iconEl.setAttribute('stroke', '#8a95a8');
           titleEl.textContent = "It looks like we weren't able to pre-qualify you with the information provided.";
-          amountEl.innerHTML = 'APR can vary between 0% APR and up to 35.99%. Please click <a href="https://pay.withcherry.com/" class="cherry-start-link" target="_blank">"Start Now"</a> to complete an actual application or ask Cherry Aesthetics to send you an application link.';
+          amountEl.innerHTML = '';
+          var denyWrap = resultEl.parentNode.querySelector('.cherry-start-btn-wrap');
+          if (!denyWrap) {
+            var wrap = document.createElement('div');
+            wrap.className = 'cherry-start-btn-wrap';
+            wrap.innerHTML = '<a href="https://pay.withcherry.com/" class="btn btn-cherry cherry-start-btn" target="_blank">Apply Now</a><span class="cherry-apr-disclosure">APR can vary between 0% APR and up to 35.99%.</span>';
+            resultEl.parentNode.insertBefore(wrap, resultEl.nextSibling);
+          }
           resultEl.style.borderColor = 'var(--border)';
           resultEl.style.background = 'var(--bg-light)';
         }

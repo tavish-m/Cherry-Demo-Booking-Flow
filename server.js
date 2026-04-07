@@ -14,7 +14,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Cherry Financing pre-approval proxy
 app.post('/api/cherry-preapproval', async (req, res) => {
   const { firstName, lastName, phone, address } = req.body;
-  const cleanPhone = phone.replace(/\D/g, '');
+  let cleanPhone = phone.replace(/\D/g, '');
+  if (cleanPhone.length === 11 && cleanPhone.startsWith('1')) cleanPhone = cleanPhone.slice(1);
 
   const payload = {
     patient: {

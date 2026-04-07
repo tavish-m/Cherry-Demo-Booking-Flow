@@ -897,13 +897,13 @@ h1 {
 }
 
 .cherry-result-icon {
-  flex-shrink: 0;
+  display: none;
 }
 
 .cherry-result-text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
   text-align: left;
 }
 
@@ -911,11 +911,64 @@ h1 {
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--navy);
+  text-align: center;
+}
+
+.cherry-result-subtitle {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--navy);
+  text-align: center;
+  margin-bottom: 6px;
 }
 
 .cherry-result-amount {
   font-size: 0.85rem;
   color: var(--text-secondary);
+}
+
+.cherry-start-btn {
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+  text-decoration: none;
+  padding: 10px 24px;
+  font-size: 0.9rem;
+}
+
+.cherry-download-link {
+  color: var(--teal);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cherry-download-btn {
+  display: block;
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  background: var(--white);
+  color: var(--navy);
+  border: 2px solid var(--navy);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.cherry-download-btn:hover {
+  background: var(--bg-light);
+}
+
+.cherry-apr-disclosure {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.65rem;
+  color: var(--text-light);
+  text-align: center;
 }
 
 .field-row {

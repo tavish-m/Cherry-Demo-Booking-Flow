@@ -679,10 +679,8 @@
     }
   });
 
-  // Cherry Financing yes/no (on ip-done page)
+  // Cherry Financing start button (on ip-done page)
   $('#cherryYes').addEventListener('click', function () {
-    $('#cherryYes').classList.add('selected');
-    $('#cherryNo').classList.remove('selected');
     // Pre-fill name and phone on cherry screen
     $('#cherryName').value = state.data.firstName + ' ' + state.data.lastName;
     $('#cherryPhone').value = state.data.phone;
@@ -702,12 +700,6 @@
   }
   setupEditBtn('#cherryNameEdit', '#cherryName');
   setupEditBtn('#cherryPhoneEdit', '#cherryPhone');
-
-  $('#cherryNo').addEventListener('click', function () {
-    $('#cherryNo').classList.add('selected');
-    $('#cherryYes').classList.remove('selected');
-    progressFill.style.width = '100%';
-  });
 
   $('#cherryCheckBtn').addEventListener('click', function () {
     var btn = this;
@@ -764,7 +756,7 @@
           if (!startBtn) {
             var wrap = document.createElement('div');
             wrap.className = 'cherry-start-btn-wrap';
-            wrap.innerHTML = '<a href="https://pay.withcherry.com/" class="btn btn-cherry cherry-start-btn" target="_blank">Start Now</a><span class="cherry-apr-disclosure">APR can vary between 0% APR and up to 35.99%.</span>';
+            wrap.innerHTML = '<a href="https://pay.withcherry.com/" class="btn btn-cherry cherry-start-btn" target="_blank">Complete Application</a><span class="cherry-apr-disclosure">APR can vary between 0% APR and up to 35.99%.</span>';
             resultEl.parentNode.insertBefore(wrap, resultEl.nextSibling);
           }
           resultEl.style.borderColor = '#00C37D';
@@ -779,7 +771,7 @@
           if (!denyWrap) {
             var wrap = document.createElement('div');
             wrap.className = 'cherry-start-btn-wrap';
-            wrap.innerHTML = '<a href="https://pay.withcherry.com/" class="btn btn-cherry cherry-start-btn" target="_blank">Apply Now</a><span class="cherry-apr-disclosure">APR can vary between 0% APR and up to 35.99%.</span>';
+            wrap.innerHTML = '<a href="https://pay.withcherry.com/" class="btn btn-cherry cherry-start-btn" target="_blank">Complete Application</a><span class="cherry-apr-disclosure">APR can vary between 0% APR and up to 35.99%.</span>';
             resultEl.parentNode.insertBefore(wrap, resultEl.nextSibling);
           }
           resultEl.style.borderColor = 'var(--border)';
